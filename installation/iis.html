@@ -334,11 +334,6 @@ Server &gt; FastCGI Settings &gt; <code class="docutils literal notranslate"><sp
 <div class="highlight-bat notranslate"><div class="highlight"><pre><span></span><span class="nv">%windir%</span>\system32\inetsrv\appcmd.exe set config -section:system.webServer/fastCgi /+<span class="s2">&quot;[fullPath=&#39;C:\MapServer\bin\mapserv.exe&#39;].environmentVariables.[name=&#39;MAPSERVER_CONFIG_FILE&#39;,value=&#39;C:\MapServer\apps\mapserver.conf&#39;]&quot;</span> /commit:apphost
 </pre></div>
 </div>
-<p>Or using PowerShell:</p>
-<div class="highlight-ps notranslate"><div class="highlight"><pre><span></span>$configPath = &quot;system.webServer/fastCgi/application[@fullPath=&#39;C:\MapServer\bin\mapserv.exe&#39;]/environmentVariables&quot;
-Add-WebConfiguration $configPath -Value @{ &quot;Name&quot; = &quot;MAPSERVER_CONFIG_FILE&quot;; &quot;Value&quot; = &quot;C:\MapServer\apps\mapserver.conf&quot; }
-</pre></div>
-</div>
 </section>
 <section id="setting-up-applications">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Setting up Applications</a><a class="headerlink" href="#setting-up-applications" title="Link to this heading">¶</a></h2>
