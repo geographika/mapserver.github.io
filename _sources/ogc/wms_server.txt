@@ -9,7 +9,7 @@
 
 :Author: Jeff McKenna
 :Contact: jmckenna at gatewaygeomatics.com
-:Last Updated: 2021-06-03
+:Last Updated: 2022-09-05
 
 .. contents:: Table of Contents
     :depth: 3
@@ -123,20 +123,19 @@ ready with WMS/WFS support)
 
 Example 1. On Unix:
 
-.. code-block:: bash
+::
 
    $ ./mapserv -v
-   MapServer version 7.7-dev OUTPUT=PNG OUTPUT=JPEG OUTPUT=KML 
-   SUPPORTS=PROJ SUPPORTS=AGG SUPPORTS=FREETYPE SUPPORTS=CAIRO 
-   SUPPORTS=SVG_SYMBOLS SUPPORTS=RSVG SUPPORTS=ICONV SUPPORTS=FRIBIDI 
-   SUPPORTS=WMS_SERVER SUPPORTS=WMS_CLIENT SUPPORTS=WFS_SERVER 
-   SUPPORTS=WFS_CLIENT SUPPORTS=WCS_SERVER SUPPORTS=SOS_SERVER 
-   SUPPORTS=GEOS SUPPORTS=POINT_Z_M SUPPORTS=PBF INPUT=JPEG 
-   INPUT=POSTGIS INPUT=OGR INPUT=GDAL INPUT=SHAPEFILE 
+   MapServer version 7.7-dev OUTPUT=PNG OUTPUT=JPEG OUTPUT=KML SUPPORTS=PROJ 
+   SUPPORTS=AGG SUPPORTS=FREETYPE SUPPORTS=CAIRO SUPPORTS=SVG_SYMBOLS 
+   SUPPORTS=RSVG SUPPORTS=ICONV SUPPORTS=FRIBIDI SUPPORTS=WMS_SERVER 
+   SUPPORTS=WMS_CLIENT SUPPORTS=WFS_SERVER SUPPORTS=WFS_CLIENT 
+   SUPPORTS=WCS_SERVER SUPPORTS=SOS_SERVER SUPPORTS=GEOS SUPPORTS=PBF 
+   INPUT=JPEG INPUT=POSTGIS INPUT=OGR INPUT=GDAL INPUT=SHAPEFILE
 
 Example 2. On Windows:
 
-.. code-block:: bash
+::
 
    C:\ms4w> mapserv -v
    MapServer version 7.7.0-dev (MS4W 4.0.5) OUTPUT=PNG OUTPUT=JPEG OUTPUT=KML 
@@ -200,8 +199,8 @@ Let's go through each of these parameters in more detail:
   layer. The Map's NAME and wms_title metadata will be used to set the
   root layer's name and title in the GetCapabilities XML output. The
   root layer in the WMS context corresponds to the whole mapfile. You 
-  can suppress the root layer's name by setting `wms_rootlayer_name`
-  to `""`.
+  can suppress the root layer's name by setting ``wms_rootlayer_name``
+  to ``""``.
 
 - **Layer Name and wms_title metadata:**
 
@@ -340,9 +339,21 @@ Let's go through each of these parameters in more detail:
 - **Configuring for GetFeatureInfo Requests:**
 
   You must set the layer TEMPLATE parameter for the layer to be
-  queryable by GetFeatureInfo requests (see :ref:`template`).  For
+  queryable by GetFeatureInfo requests (see :ref:`template`), with a value
+  such as *"empty"* or the name of your html template file.  For
   requests of type "text/html" you should also set the layer HEADER
   and FOOTER parameters.
+  
+  .. code-block:: mapfile
+  
+    MAP
+      ...
+      LAYER
+        ...
+        TEMPLATE "empty"
+        ...
+      END #layer
+    END #map
   
   As of MapServer 4.6 you must set the *gml_\** metadata for the layer
   attributes to be served (see the Layer Object metadata in the
@@ -428,14 +439,6 @@ the WMS spec:
    "STYLES=" with an empty value to use default style(s). Named styles
    are also supported and are controlled by CLASS GROUP names in the
    mapfile.
-   
-   .. note::
-   
-      As of the MapServer 8.0 release, MapServer will strictly require
-      the "STYLES=" parameter (unless SLD & SLD_BODY are specified).  
-      To avoid this requirement, version 8.0 will allow setting 
-      `"wms_allow_getmap_without_styles" "true"` in 
-      :ref:`MAP.WEB.METADATA <wms_allow_getmap_without_styles>`).
 
    **SRS=namespace:identifier:** Spatial Reference System.
 
@@ -465,6 +468,13 @@ A valid example would therefore be:
        &FORMAT=image/png
 
 Here is a working `valid request`_.
+
+.. tip::
+    Since MapServer 8.0, the *tile_map_edge_buffer* metadata can also be used in
+    WMS GetMap requests, by adding the vendor-specific parameter *TILED=TRUE* 
+    to your GetMap request.  
+    
+    .. seealso:: :ref:`tile_mode`
       
 Test with a Real Client
 ***********************
@@ -480,6 +490,10 @@ few pointers:
 
 - `QGIS`_ is a full GIS package which includes WMS client
   support. (recommended)
+  
+  .. tip::
+    You can/should use the `QGIS Network Logger <https://github.com/MapServer/MapServer/wiki/Get-the-Raw-WMS-Request-Generated-by-QGIS>`__ 
+    to get the exact GetMap or GetCapabilities requests sent by QGIS.
 
 - `OpenJUMP`_ is a desktop GIS package which includes WMS client
   support.
@@ -670,7 +684,6 @@ parameters in the original page request.
 e.g, the URL wmsmap?mode=map will be rewritten as
 
 ::
-
   /cgi-bin/mapserv?map=/home/www/mapserverstuff/mymapfile.map&mode=map
 
 If just the URL wmsmap is given (without any parameters) a page not
@@ -783,7 +796,8 @@ Wrapper script (Unix)
 
 On Unix servers, you can setup a wrapper shell script that sets the
 MS_MAPFILE environment variable and then passes control to the mapserv
-executable... that results on a cleaner OnlineResource URL:
+executable.  The script will usually live inside your */cgi-bin/* directory.
+The result is a cleaner OnlineResource URL:
 
 ::   
    
@@ -981,7 +995,7 @@ Web Object Metadata
   directive allows for aware WMS clients to use this resulting HTTP
   header value as a means to optimize (and minimize) requests to a WMS
   Server. More info is available at
-  http://www.mnot.net/cache_docs/#CACHE-CONTROL
+  https://www.mnot.net/cache_docs/#CACHE-CONTROL
  
 .. index:: 
    triple: WMS; METADATA; ows_schemas_location
@@ -1059,21 +1073,6 @@ wms_postcode, wms_country**
 - *WMS TAG Name:* ContactAddress and family (WMS1.1.1, sect. 7.1.4.2)
 - *Description:* Optional contact address information. If provided
   then all six metadata items are required.
-  
-.. index:: 
-   triple: WMS; METADATA; wms_allow_getmap_without_styles
-   
-.. _wms_allow_getmap_without_styles:
-
-**wms_allow_getmap_without_styles**
-
-  .. note::
-
-      `wms_allow_getmap_without_styles` will be included in the MapServer 8.0 release.
-
-- *Description:* (Optional) "true" or "false".  If true, the "STYLES="
-  GetMap parameter will not be required in the request.  If false (the default as of
-  MapServer 8.0) the "STYLES=" GetMap parameter will be required in the request.
 
 .. index:: 
    triple: WMS; METADATA; wms_attribution_logourl_format
@@ -1381,7 +1380,7 @@ wms_postcode, wms_country**
 - *WMS TAG Name:* Name (WMS1.1.1, sect. 7.1.4.1)
 - *Description:* (Optional) Same as MAP.NAME, applied to the root
   Layer element.  If not set, then MAP.NAME will be used. If set to
-  `""`, then Name element is suppressed and the root layer name
+  ``""``, then Name element is suppressed and the root layer name
   will not be advertised as a GetMap capable layer.
 
 .. index:: 
@@ -1756,17 +1755,21 @@ Layer Object Metadata
 - *WMS TAG Name:* BoundingBox (WMS1.1.1, sect. 6.5.6)
 - *Description:* (Optional) Used for the layer's BoundingBox tag for
   cases where it is impossible (or very inefficient) for MapServer to
-  probe the data source to figure its extents. The value for this
-  metadata is "minx miny maxx maxy" separated by spaces, with the
-  values in the layer's projection units.  If wms_extent is provided
-  then it has priority and MapServer will NOT try to read the source
-  file's extents.
+  probe the data source to figure its extents (such as with databases). 
+  The value for this metadata is "minx miny maxx maxy" separated by 
+  spaces, with the values in the layer's projection units.  If wms_extent 
+  is provided then it has priority and MapServer will NOT try to read 
+  the source file's extents.
+  
+  .. seealso:: :ref:`vector_optimization`
 
   For Rasters served through WMS, MapServer can now use the wms_extent
   metadata parameter to register the image. If a .wld file cannot be
   found, MapServer will then look for the wms_extent metadata
   parameter and use the extents of the image and the size of the image
   for georegistration.
+  
+  .. seealso:: :ref:`raster_optimization`  
 
 .. index:: 
    triple: WMS; METADATA; wms_getfeatureinfo_formatlist
@@ -1914,7 +1917,7 @@ Layer Object Metadata
   record (e.g. "text/plain"). The layer metadata wms_metadataurl_type
   and wms_metadataurl_href must also be specified.
 - refer to section 7.1.4.5.10 of the WMS 1.1.1 spec. 
-- To output several MetadataURL elements, use `wms_metadataurl_list`
+- To output several MetadataURL elements, use ``wms_metadataurl_list``
 
 .. index:: 
    triple: WMS; METADATA; wms_metadataurl_href
@@ -1925,16 +1928,12 @@ Layer Object Metadata
   metadata wms_metadataurl_format and wms_metadataurl_type must also
   be specified.
 - refer to section 7.1.4.5.10 of the WMS 1.1.1 spec. 
-- To output several MetadataURL elements, use `wms_metadataurl_list`
+- To output several MetadataURL elements, use ``wms_metadataurl_list``
 
 .. index:: 
    triple: WMS; METADATA; wms_metadataurl_list
 
 **wms_metadataurl_list**
-
-  .. note::
-
-      `wms_metadataurl_list` will be included in the MapServer 8.0 release.
 
 - *Description:* (Optional) Space-separated list of parts of metadata keys,
   to be able to specify several MetadataURL. If the value of wms_metadataurl_list
@@ -1957,6 +1956,8 @@ Layer Object Metadata
         "wms_metadataurl_html_type" "TC211"
         "wms_metadataurl_html_href" "http://example.com/testHTML"
 
+- .. versionadded:: 8.0
+
 .. index:: 
    triple: WMS; METADATA; wms_metadataurl_type
 
@@ -1968,7 +1969,7 @@ Layer Object Metadata
   layer metadata wms_metadataurl_format and wms_metadataurl_href must
   also be specified.
 - refer to section 7.1.4.5.10 of the WMS 1.1.1 spec. 
-- To output several MetadataURL elements, use `wms_metadataurl_list`
+- To output several MetadataURL elements, use ``wms_metadataurl_list``
 
 .. index:: 
    triple: WMS; METADATA; wms_opaque
@@ -2088,8 +2089,8 @@ Layer Object Metadata
 Layer Metadata API
 ----------------------
 
-If `wms_metadataurl_href` is not defined, MapServer will provide a link to
-the Layer Metadata API for the given layer in the `<MetadataURL>` element
+If ``wms_metadataurl_href`` is not defined, MapServer will provide a link to
+the Layer Metadata API for the given layer in the ``<MetadataURL>`` element
 See the :ref:`Layer Metadata API <layer_metadata>` documentation for more
 information.
 
@@ -2177,23 +2178,25 @@ The following is a very basic WMS Server mapfile:
     :linenos:
 
     MAP
-      NAME "WMS-test"
+      NAME "WMS-test" ##strongly recommended. containing no special characters or spaces
       STATUS ON
       SIZE 400 300
       EXTENT -2200000 -712631 3072800 3840000
       UNITS METERS
-      SHAPEPATH "../data"
+      SHAPEPATH "./data"
       IMAGECOLOR 255 255 255
-      FONTSET ../etc/fonts.txt
+      FONTSET "../etc/fonts.txt"
     
       WEB
         IMAGEPATH "/ms4w/tmp/ms_tmp/"
         IMAGEURL "/ms_tmp/"
         METADATA
-          "wms_title"     "WMS Demo Server"  ##required
+          "wms_title"          "WMS Demo Server"  ##required
+          "wms_abstract"       "Longer description of your service" ##recommended         
           "wms_onlineresource" "http://yourpath/cgi-bin/mapserv.exe?map=/path/to/your-mapfile.map"   ##required (must change mapfile path)
-          "wms_srs"       "EPSG:3978 EPSG:3857 EPSG:4269 EPSG:4326"  ##recommended
-          "wms_enable_request" "*"   ##necessary
+          "wms_srs"            "EPSG:3978 EPSG:3857 EPSG:4269 EPSG:4326"  ##recommended
+          "wms_enable_request" "*"   ##required
+          "wms_getfeatureinfo_formatlist" "text/plain,text/html,application/vnd.ogc.gml,gml" ##recommended      
         END
       END # Web
     
@@ -2212,13 +2215,19 @@ The following is a very basic WMS Server mapfile:
       #
     
       LAYER
-        NAME "park"
+        NAME "park" ##no special characters or spaces
         METADATA
-          "wms_title"    "Parks"   ##required
+          "wms_title"         "Parks"   ##required
+          "wms_abstract"      "Longer description of your layer" ##recommended
+          "wms_include_items" "all" ##optional
+          "gml_include_items" "all" ##optional
+          "gml_featureid"     "ogc_fid" ##optional
+          "gml_geometries"    "msgeom" ##optional
+          "gml_msgeom_type"   "multipolygon" ##optional         
         END
         TYPE POLYGON
-        STATUS OFF
-        DATA park
+        STATUS ON
+        DATA "park.shp"
         PROJECTION
           "init=epsg:3978"   ##recommended
         END
@@ -2229,16 +2238,23 @@ The following is a very basic WMS Server mapfile:
             OUTLINECOLOR 120 120 120
           END # Style
         END # Class
+        TEMPLATE "empty" ##recommended (enable GetFeatureInfo / can point to valid .html template)
       END # Layer
     
       LAYER
-        NAME popplace
+        NAME "cities" ##no special characters or spaces
         METADATA
-          "wms_title"    "Cities"  ##required
+          "wms_title"         "Cities"  ##required
+          "wms_abstract"      "Longer description of your layer" ##recommended
+          "wms_include_items" "all" ##optional
+          "gml_include_items" "all" ##optional
+          "gml_featureid"     "ogc_fid" ##optional
+          "gml_geometries"    "msgeom" ##optional
+          "gml_msgeom_type"   "point" ##optional
         END
         TYPE POINT
         STATUS ON
-        DATA popplace
+        DATA "popplace.shp"
         PROJECTION
           "init=epsg:3978"   ##recommended
         END
@@ -2250,9 +2266,10 @@ The following is a very basic WMS Server mapfile:
             COLOR 0 0 0
           END # Style
         END # Class
+        TEMPLATE "empty" ##recommended (enable GetFeatureInfo / can point to valid .html template)
       END # Layer
 
-    END # Map File      
+    END # mapfile      
       
 FAQ / Common Problems
 =====================
@@ -2333,7 +2350,7 @@ FAQ / Common Problems
            "wms_title"            "WMS Demo Server" 
            "wms_onlineresource"   "http://my.host.com/cgi-bin/mapserv?map=/path/to/your-mapfile.map" #must change mapfile path
            "wms_srs"              "AUTO:42001 AUTO:42002" 
-           "wms_enable_request"   "*"   ##necessary
+           "wms_enable_request" "*"   ##necessary
          END # METADATA
        END # WEB
               
@@ -2349,11 +2366,11 @@ FAQ / Common Problems
 .. _`WMS 1.3.0 specification`: https://portal.ogc.org/files/?artifact_id=14416 
 .. _`WMS Cookbook`: https://web.archive.org/web/20150117113120/http://www.intl-interfaces.com/cookbook/WMS
 .. old WMS cookbook link: http://www.intl-interfaces.com/cookbook/WMS/
-.. _`MapServer OGC Web Services Workshop`: http://mapserver.github.io/ms-ogc-workshop/
-.. _`MS4W`: https://ms4w.com
-.. _`QGIS`: http://www.qgis.org/
+.. _`MapServer OGC Web Services Workshop`: https://mapserver.github.io/ms-ogc-workshop/
+.. _`MS4W`: https://www.ms4w.com
+.. _`QGIS`: https://www.qgis.org/
 .. _`OpenJUMP`: http://www.openjump.org
-.. _`Deegree`: http://www.deegree.org/
+.. _`Deegree`: https://www.deegree.org/
 .. _`uDig`: http://udig.refractions.net/
 .. _`WMS 1.1.1 section 6.2.2`: https://portal.ogc.org/files/?artifact_id=1081&version=1&format=pdf
 .. _`valid request`: https://demo.mapserver.org/cgi-bin/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-180,-90,180,90&SRS=EPSG:4326&WIDTH=953&HEIGHT=480&LAYERS=bluemarble,cities&STYLES=&FORMAT=image/png&TRANSPARENT=true

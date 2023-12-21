@@ -9,7 +9,9 @@
 
 :Author:        Frank Warmerdam
 :Contact:       warmerdam at pobox.com
-:Last Updated:  2013-07-04
+:Author:        Jeff McKenna
+:Contact:       jmckenna at gatewaygeomatics.com
+:Last Updated:  2022-08-20
 
 .. contents:: Table of Contents
     :depth: 2
@@ -30,9 +32,9 @@ How are rasters added to a Map file?
 ====================================
 
 A simple raster layer declaration looks like this. The `DATA` file is
-interpreted relative to the `SHAPEPATH`, much like shapefiles.
+interpreted relative to the `SHAPEPATH`, much like vector files.
 
-::
+.. code-block:: mapfile
 
     LAYER
       NAME "JacksonvilleNC_CIB"
@@ -72,7 +74,7 @@ with that pixel value ("[red]", "[green]" and "[blue]") are available for use
 in classifications. When used in an evaluated expression the pixel, red, green
 and blue keywords must be in lower case.
 
-::
+.. code-block:: mapfile
 
     LAYER
       NAME "JacksonvilleNC_CIB"
@@ -158,7 +160,7 @@ range -10 to 10 are classified. In particular, the values classified would be
 four value are classified, and one of the classification results is selected
 based on which value is closest to the pixel value being classified.
 
-::
+.. code-block:: mapfile
 
     LAYER
       NAME grid1
@@ -199,6 +201,10 @@ Supported Formats
 Since version 6.2, MapServer raster input support is through the GDAL
 raster library only.
 
+.. note::
+
+   For PGRaster access, see: :ref:`input_postgis`
+
 More information on GDAL can be found at https://gdal.org, including the
 `supported formats list`_. Some of the advanced MapServer raster features,
 such as resampling, RGB color cube generation and automatic projection capture
@@ -230,7 +236,7 @@ enabled.  To find out what GDAL formats are available, the "gdalinfo
       NITF (rw+vs): National Imagery Transmission Format
       RPFTOC (rovs): Raster Product Format TOC format
       ECRGTOC (rovs): ECRG TOC format
-      ...
+      ...      
 
 .. index::
    pair: Raster; Tile indexing
@@ -261,7 +267,7 @@ system (projection). This requires specifying the :ref:`TILESRS
 <tilesrs>` keyword and generating the tileindex with a few additional
 options. See :ref:`tileindex_mixed_srs`.
 
-::
+.. code-block:: mapfile
 
   LAYER
     NAME "hpool"
@@ -404,6 +410,10 @@ are supported in MapServer 4.0 and newer.
     raster file. If one band is selected, it is treated as greyscale. If 3 are
     selected, they are treated as red, green and blue. If 4 are selected they
     are treated as red, green, blue and alpha (opacity).
+
+    Starting with MapServer 8, a GDAL mask band attached to the raster (that is
+    not an alpha band) will be automatically used for opacity rendering when BANDS
+    is specified, unless the `PROCESSING` "USE_MASK_BAND=NO" option is set.
 
     Example:
   
@@ -585,7 +595,7 @@ are supported in MapServer 4.0 and newer.
 **SCALE[_n]=AUTO or min,max**
     This directive instructs the GDAL reader to pre-scale the incoming raster
     data. It is primarily used to scale 16bit or floating point data to the
-    range 0-255, but can also be used to constrast stretch 8bit data. If an
+    range 0-255, but can also be used to contrast stretch 8bit data. If an
     explicit min/max are provided then the input data is stretch (or squished)
     such that the minimum value maps to zero, and the maximum to 255. If AUTO
     is used instead, a min/max is automatically computed. To control the
@@ -888,7 +898,7 @@ Note that overview building should be done after translating to a
 final format.  Overviews are lost in format conversions using
 gdal_translate.  Also, nothing special needs to be done to make
 MapServer use GDAL generated overviews.  They are automatically picked
-up by GDAL when mapserver requests a reduced resolution map.
+up by GDAL when MapServer requests a reduced resolution map.
 
 
 .. index::
@@ -916,10 +926,10 @@ flexible gdalwarp utility::
   gdalwarp -rc -tr 250 250 ortho_*.tif overview.tif
 
 In some cases the easiest way of generating an overview is to let
-MapServer do it using the shp2img utility.  For instance if the
+MapServer do it using the map2img utility.  For instance if the
 tileindex layer is called ''orthos'' we could do something like::
 
-  shp2img -m ortho.map -l orthos -o overview.png 
+  map2img -m ortho.map -l orthos -o overview.png 
 
 Note that the overview will be generated with the extents and size in
 the .map file, so it may be necessary to temporarily adjust the map

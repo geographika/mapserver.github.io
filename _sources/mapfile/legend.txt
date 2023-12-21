@@ -51,7 +51,8 @@ INTERLACE [on|off]
    :name: mapfile-legend-keysize
     
 KEYSIZE [x][y]
-    Size of symbol key boxes in pixels. Default is 20 by 10.
+    Size of symbol key boxes in pixels. Default is 20 by 10. Minimum
+    values are 5, and maximum values are 200. 
 
 .. index::
    pair: LEGEND; KEYSPACING
@@ -59,7 +60,7 @@ KEYSIZE [x][y]
     
 KEYSPACING [x][y]
     Spacing between symbol key boxes ([y]) and labels ([x]) in pixels. 
-    Default is 5 by 5.
+    Default is 5 by 5. Minimum values are 0, and maximum values are 50.
 
 .. index::
    pair: LEGEND; LABEL
@@ -137,8 +138,7 @@ TEMPLATE [filename]
    :name: mapfile-legend-transparent
     
 TRANSPARENT [on|off]
-    .. deprecated:: 4.6
 
-    Should the background color for the legend be transparent. 
-    This flag is now deprecated in favor of declaring transparency within 
-    :ref:`OUTPUTFORMAT` declarations. Default is off.
+    By default, a legend will inherit the same transparency setting as the 
+    map :ref:`OUTPUTFORMAT`. However, this flag can be used to override this setting, 
+    allowing, for example, a transparent legend to be embedded in a non-transparent map.

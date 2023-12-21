@@ -1,28 +1,31 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>COMPOSITE &#8212; MapServer 7.6.4 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx.css" />
+    <title>COMPOSITE &#8212; MapServer 8.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx.css?v=6c7b17ac" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=dd298242" />
+    <link rel="stylesheet" type="text/css" href="../_static/ribbon.css?v=ea091bf4" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <script src="../_static/documentation_options.js?v=521b6f53"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
-    <link rel="shortcut icon" href="../_static/mapserver.ico"/>
+    <link rel="icon" href="../_static/mapserver.ico"/>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="next" title="Display of International Characters in MapServer" href="encoding.html" />
+    <link rel="next" title="CONFIG" href="config.html" />
     <link rel="prev" title="CLUSTER" href="cluster.html" /> 
   </head><body>
+
+
+<!-- for main branch only, do not backport this -->
 
 <table width="100%" style="width: 100%; background-color: white;">
   <tr>
@@ -97,13 +100,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="encoding.html" title="Display of International Characters in MapServer"
+          <a href="config.html" title="CONFIG"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="cluster.html" title="CLUSTER"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Home</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../documentation.html" >MapServer 7.6.4 Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../documentation.html" >MapServer 8.0.1 Documentation</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Mapfile</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">COMPOSITE</a></li> 
       </ul>
@@ -116,11 +119,11 @@
           <div class="body" role="main">
             
   <section id="composite">
-<span id="index-0"></span><span id="id1"></span><h1>COMPOSITE<a class="headerlink" href="#composite" title="Permalink to this headline">¶</a></h1>
+<span id="index-0"></span><span id="id1"></span><h1>COMPOSITE<a class="headerlink" href="#composite" title="Link to this heading">¶</a></h1>
 <section id="background">
-<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
-<p>The <cite>COMPOSITE</cite> block is used to achieve blending effects with
-MapServer.</p>
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading">¶</a></h2>
+<p>Available since MapServer 7.0, the <cite>COMPOSITE</cite> block is used to achieve
+blending effects with MapServer.</p>
 <p>Some cartographic renderings benefit from the addition of advanced
 blending modes, as explained in detail in <a class="reference external" href="http://en.wikipedia.org/wiki/Blend_modes">Blend Modes</a>.  This
 functionality is essential for more pleasant renderings of raster
@@ -134,11 +137,24 @@ different kinds of overprinting effects.</p>
 <cite>src-over</cite>).</p>
 </section>
 <section id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
-<span id="mapfile-composite-opacity"></span><dl class="simple" id="opacity">
-<dt>OPACITY [integer]</dt><dd><p>Sets the opacity level (or the inability to see through the layer) of all
-classed pixels for a given layer.  A value of 100 is opaque and
-0 is fully transparent.</p>
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<dl id="mapfile-composite-compfilter">
+<dt>COMPFILTER [string]</dt><dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 7.2.</span></p>
+</div>
+<p>Name of the compositing filter. The primary purpose is to enable soft shadow
+and blurring effects, although other usages can exist or could be added in
+the future. Several compfilters can be placed after another to create a combined
+effect. For example a blur and translate effect can be combined to make a
+soft shadow effect behind a feature.</p>
+<p>The currently available filters are:</p>
+<ul class="simple">
+<li><p>blur(integer)</p></li>
+<li><p>translate(integer,integer)</p></li>
+<li><p>grayscale()</p></li>
+<li><p>blacken()</p></li>
+<li><p>whiten()</p></li>
+</ul>
 </dd>
 </dl>
 <dl id="mapfile-composite-compop">
@@ -372,9 +388,15 @@ backends <em>and</em> when pixman support is not enabled, and will fall back to
 “src-over” when this is not the case.</p>
 </dd>
 </dl>
+<span id="mapfile-composite-opacity"></span><dl class="simple" id="opacity">
+<dt>OPACITY [integer]</dt><dd><p>Sets the opacity level (or the inability to see through the layer) of all
+classed pixels for a given layer. Must be between 0 to 100. A value of 100 is opaque and
+0 is fully transparent.</p>
+</dd>
+</dl>
 </section>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
 <p>Simple transparency / opacity is achieved by only specifying the
 <cite>OPACITY</cite> parameter (this achieves the same effect as the legacy
 <cite>LAYER</cite> <cite>OPACITY</cite> parameter):</p>
@@ -416,7 +438,7 @@ the value <cite>darken</cite>:</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script><h3>Navigation</h3>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <p>
 <a href="../about.html" title="About">About</a><br>
 <a href="../products.html" title="Products">Products</a><br>
@@ -449,21 +471,21 @@ the value <cite>darken</cite>:</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="encoding.html" title="Display of International Characters in MapServer"
+          <a href="config.html" title="CONFIG"
              >next</a> |</li>
         <li class="right" >
           <a href="cluster.html" title="CLUSTER"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Home</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../documentation.html" >MapServer 7.6.4 Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../documentation.html" >MapServer 8.0.1 Documentation</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="index.html" >Mapfile</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">COMPOSITE</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; <a href="../copyright.html">Copyright</a> 2021, Open Source Geospatial Foundation.
-      Last updated on 2021-09-15.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    &#169; <a href="../copyright.html">Copyright</a> 2023, Open Source Geospatial Foundation.
+      Last updated on 2023-12-21.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
     </div>
   </body>
 </html>

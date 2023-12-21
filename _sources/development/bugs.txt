@@ -23,7 +23,7 @@ Please keep the following issues in mind when submitting a bug/issue:
    from an prepared binary build, and specify the MapServer version.
    
 3. Search existing issues/tickets, as well as the MapServer mailing lists for related 
-   discussions (through `Nabble <http://osgeo-org.1560.x6.nabble.com/MapServer-f4226623.html>`__)
+   discussions (such as through `mail-archive.com <https://www.mail-archive.com/mapserver-users@lists.osgeo.org/>`__)
    before submitting the ticket.
    
 4. Do not use GitHub to ask questions, which should always be sent to the :ref:`lists` instead.
@@ -44,7 +44,7 @@ bug, having to fix paths, remove unnecessary layers, removing references to
 external symbols or fonts that were not included or even needed and otherwise
 doctoring your test case to get it to a point when they can actually use it.
 
-If the bug is easily demonstrated with ":ref:`shp2img`", without the need to
+If the bug is easily demonstrated with ":ref:`map2img`", without the need to
 setup a proper web service and test it through http, then please show it that
 way. If a standalone :ref:`mapscript` script can demonstrate a problem without it
 having to be a web service, likewise submit it that way.  If your problem 

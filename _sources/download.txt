@@ -18,13 +18,14 @@ Current Release(s)
 
 * MapServer
 
-  * **2021-07-12** `mapserver-7.6.4.tar.gz <https://download.osgeo.org/mapserver/mapserver-7.6.4.tar.gz>`__ :ref:`Changelog <changelog-7-6>`
+  * **2023-04-18** `mapserver-8.0.1.tar.gz <https://download.osgeo.org/mapserver/mapserver-8.0.1.tar.gz>`__ :ref:`Changelog <changelog-8-0>`
+  * **2023-04-18** `mapserver-7.6.5.tar.gz <https://download.osgeo.org/mapserver/mapserver-7.6.5.tar.gz>`__ :ref:`Changelog <changelog-7-6>`
   * **2021-04-30** `mapserver-7.4.5.tar.gz <https://download.osgeo.org/mapserver/mapserver-7.4.5.tar.gz>`__ :ref:`Changelog <changelog-7-4>`
   * **2021-04-30** `mapserver-7.2.3.tar.gz <https://download.osgeo.org/mapserver/mapserver-7.2.3.tar.gz>`__ :ref:`Changelog <changelog-7-2>`
   * **2021-04-30** `mapserver-7.0.8.tar.gz <https://download.osgeo.org/mapserver/mapserver-7.0.8.tar.gz>`__ :ref:`Changelog <changelog-7-0>`
 * MapCache
 
-  * **2020-02-24** `mapcache-1.10.0.tar.gz <https://download.osgeo.org/mapserver/mapcache-1.10.0.tar.gz>`__ :ref:`Changelog <changelog-mapcache-1-10>`
+  * **2023-01-30** `mapcache-1.14.0.tar.gz <https://download.osgeo.org/mapserver/mapcache-1.14.0.tar.gz>`__ :ref:`Changelog <changelog-mapcache-1-14>`
 
 * TinyOWS
 
@@ -64,6 +65,7 @@ Current Release
 Previous Releases
 ..............................................................................
 
+* `MapServer-7.6-Documentation.pdf <https://download.osgeo.org/mapserver/docs/MapServer-76.pdf>`__ |image|
 * `MapServer-7.4-Documentation.pdf <https://download.osgeo.org/mapserver/docs/MapServer-74.pdf>`__ |image|
 * `MapServer-7.2-Documentation.pdf <https://download.osgeo.org/mapserver/docs/MapServer-72.pdf>`__ |image|
 * `MapServer-7.0-Documentation.pdf <https://download.osgeo.org/mapserver/docs/MapServer-70.pdf>`__ |image|
