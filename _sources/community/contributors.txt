@@ -80,4 +80,4 @@ Source Code Contributors (Past and Present)
 .. _`Tydac AG`: http://www.tydac.ch/
 .. _`Gateway Geomatics`: https://gatewaygeomatics.com
 .. _`Compass Informatics`: https://compass.ie/
-   _`ISRIC World Soil Information`: https://www.isric.org/
+.. _`ISRIC World Soil Information`: https://www.isric.org/
