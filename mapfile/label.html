@@ -318,8 +318,8 @@ or alongside text. See <a class="reference internal" href="../development/announ
 </div>
 <p>This keyword interacts with the <a class="reference internal" href="#wrap">WRAP</a> keyword so that line breaks
 only occur after the defined number of characters.</p>
-<table class="docutils align-default" id="id2">
-<caption><span class="caption-text">Interaction with <a class="reference internal" href="#wrap">WRAP</a> keyword</span><a class="headerlink" href="#id2" title="Link to this table">¶</a></caption>
+<table class="docutils align-default" id="id4">
+<caption><span class="caption-text">Interaction with <a class="reference internal" href="#wrap">WRAP</a> keyword</span><a class="headerlink" href="#id4" title="Link to this table">¶</a></caption>
 <tbody>
 <tr class="row-odd"><td></td>
 <td><p><strong>maxlength = 0</strong></p></td>
@@ -515,7 +515,7 @@ of the following: <em>ul|uc|ur|cl|cc|cr|ll|lc|lr|auto</em>.</p>
 </dd>
 </dl>
 <dl id="mapfile-label-priority">
-<dt>PRIORITY [integer]|[item_name]|[attribute]</dt><dd><div class="versionadded">
+<dt>PRIORITY [integer]|[item_name]|[attribute]|[expression]</dt><dd><div class="versionadded">
 <p><span class="versionmodified added">New in version 5.0.</span></p>
 </div>
 <p>The priority parameter takes an integer value between 1 (lowest)
@@ -526,10 +526,13 @@ brackets around the [item_name]. e.g. “PRIORITY [someattribute]”</p>
 priority, with the highest priority levels rendered first.
 Specifying an out of range PRIORITY value inside a map file will
 result in a parsing error. An out of range value set via
-MapScript or coming from a shape attribute will be clamped to the
-min/max values at rendering time.  There is no expected impact on
+MapScript, coming from a shape attribute, or calculated by an expression will be
+clamped to the min/max values at rendering time.  There is no expected impact on
 performance for using label priorities.</p>
-<p>[<em>Attribute</em>] was introduced in version 5.6.</p>
+<ul class="simple">
+<li><p>[<em>Attribute</em>] was introduced in version 5.6.</p></li>
+<li><p>[<a href="#id2"><span class="problematic" id="id3">*</span></a>expression] was added in version 8.2.</p></li>
+</ul>
 </dd>
 </dl>
 <dl id="mapfile-label-repeatdistance">
@@ -760,9 +763,9 @@ for conditional line wrapping after a given number of characters.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; <a href="../copyright.html">Copyright</a> 2023, Open Source Geospatial Foundation.
-      Last updated on 2023-12-22.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
+    &#169; <a href="../copyright.html">Copyright</a> 2024, Open Source Geospatial Foundation.
+      Last updated on 2024-02-08.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

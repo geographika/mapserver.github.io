@@ -175,11 +175,13 @@ if they exist for any of the <a class="reference internal" href="../optimization
 </dl>
 <dl id="mapfile-config-maps">
 <dt>MAPS</dt><dd><p>This block allows for aliases to be mapped to mapfile paths. If the <code class="docutils literal notranslate"><span class="pre">MS_MAP_NO_PATH</span></code> environment
-variable is set then <strong>only</strong> these aliases can be used in the <code class="docutils literal notranslate"><span class="pre">map=</span></code> CGI parameter.
-The use of aliases also helps to simplify <a class="reference internal" href="../ogc/ogc_api.html#ogcapi"><span class="std std-ref">OGC API : Features</span></a> URLs, for example the alias
+variable is set then <strong>only</strong> these aliases can be used in the <code class="docutils literal notranslate"><span class="pre">map=</span></code> CGI parameter.</p>
+<p>Aliases are case-insensitive - “ITASCA” and “Itasca” are handled identically.</p>
+<p>The use of aliases also helps to simplify <a class="reference internal" href="../ogc/ogc_api.html#ogcapi"><span class="std std-ref">OGC API : Features</span></a> URLs, for example the alias
 <code class="docutils literal notranslate"><span class="pre">itasca</span></code> can be used in the place of a mapfile path in a URL for example:
-<a class="reference external" href="http://localhost/mapserver/itasca/ogcapi/collections">http://localhost/mapserver/itasca/ogcapi/collections</a>
-Aliases are case-insensitive - “ITASCA” and “Itasca” are handled identically.</p>
+<a class="reference external" href="http://localhost/mapserver/itasca/ogcapi/collections">http://localhost/mapserver/itasca/ogcapi/collections</a>.</p>
+<p>As of MapServer 8.2 <em>all</em> types of MapServer requests can use keys from the <code class="docutils literal notranslate"><span class="pre">MAPS</span></code> block in the config file
+as part of a URL for example <a class="reference external" href="http://localhost/itasca/">http://localhost/itasca/</a>?request=WMS&amp;…</p>
 <div class="highlight-mapfile notranslate"><div class="highlight"><pre><span></span><span class="err">MAPS</span>
   <span class="err">ITASCA</span> <span class="s">&quot;/opt/mapserver/mapserver-demo/itasca.map&quot;</span>
   <span class="err">TEST_MAPFI</span><span class="ow">LE</span> <span class="s">&quot;/opt/mapserver/test/test.map&quot;</span>
@@ -311,9 +313,9 @@ This registry of plugins avoids possible unsafe libraries being loaded by a mapf
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; <a href="../copyright.html">Copyright</a> 2023, Open Source Geospatial Foundation.
-      Last updated on 2023-12-22.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
+    &#169; <a href="../copyright.html">Copyright</a> 2024, Open Source Geospatial Foundation.
+      Last updated on 2024-02-08.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

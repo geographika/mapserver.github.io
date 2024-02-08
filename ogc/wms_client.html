@@ -361,8 +361,7 @@ the “wms_onlineresource” metadata will be used. If both CONNECTION and
 <p>If wms_formatlist is provided then wms_format is optional and MapServer will
 pick the first supported format in wms_formatlist for use in GetMap requests.
 If both wms_format and wms_formatlist are provided then wms_format takes precedence.
-Also note that WMS Servers only advertize supported formats that are part of the GD/GDAL
-libraries.</p>
+The image format must be understood by the GDAL library.</p>
 </div>
 </li>
 </ul>
@@ -398,6 +397,24 @@ This will allow MapServer to request the layer only at scales where it makes sen
 <li><p><em>Description:</em> It is optional at this point. MapServer will create one internally if needed.  Including one may
 allow MapServer to avoid looking up a definition in the PROJ init files.</p></li>
 </ul>
+<p><strong>“wms_allowed_gdal_drivers” metadata</strong></p>
+<blockquote>
+<div><div class="versionadded">
+<p><span class="versionmodified added">New in version 8.2.0.</span></p>
+</div>
+<p>List of <a class="reference external" href="https://gdal.org/drivers/raster/index.html">GDAL driver short names</a>
+that are allowed to be used to open the image returned by the remove server.
+The separator is a comma character.
+The default value is “PNG,JPEG” (starting with version 8.2.0). If the output
+format asked to the server is explicitly set to PNG or image/png
+(resp. JPEG or image/jpeg), then the default value is restricted of
+wms_allowed_gdal_drivers is set to PNG (resp. JPEG)</p>
+<div class="highlight-mapfile notranslate"><div class="highlight"><pre><span></span><span class="k">METADATA</span>
+  <span class="s">&quot;wms_allowed_gdal_drivers&quot;</span> <span class="s">&quot;PNG,JPEG,WEBP&quot;</span> <span class="c"># to allow WEBP as well</span>
+<span class="k">END</span>
+</pre></div>
+</div>
+</div></blockquote>
 <p><strong>“wms_auth_username” metadata</strong></p>
 <ul>
 <li><p><em>Description:</em> msEncrypt-style authorization string.  Empty strings are also accepted.</p>
@@ -790,9 +807,9 @@ string and metadata.</p></li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; <a href="../copyright.html">Copyright</a> 2023, Open Source Geospatial Foundation.
-      Last updated on 2023-12-22.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
+    &#169; <a href="../copyright.html">Copyright</a> 2024, Open Source Geospatial Foundation.
+      Last updated on 2024-02-08.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

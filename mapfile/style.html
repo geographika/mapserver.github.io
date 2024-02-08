@@ -721,7 +721,7 @@ continuous linear gradient between the two values.</p>
 <p>See the associated RFC document <a class="reference internal" href="../development/rfc/ms-rfc-6.html#rfc6"><span class="std std-ref">MS RFC 6: Color Range Mapping of Continuous Feature Values</span></a>.</p>
 </div></blockquote>
 <dl id="mapfile-style-size">
-<dt>SIZE [double|attribute]</dt><dd><p>Height, in layer <cite>SIZEUNITS</cite>, of the symbol/pattern to be used.
+<dt>SIZE [double|attribute|expression]</dt><dd><p>Height, in layer <cite>SIZEUNITS</cite>, of the symbol/pattern to be used.
 Default value depends on the <a class="reference internal" href="symbol.html#symbol"><span class="std std-ref">SYMBOL</span></a> <cite>TYPE</cite>.  For <cite>pixmap</cite>:
 the height (in pixels) of the pixmap; for <cite>ellipse</cite> and <cite>vector</cite>:
 the maximum y value of the <a class="reference internal" href="symbol.html#symbol"><span class="std std-ref">SYMBOL</span></a> <cite>POINTS</cite> parameter, for
@@ -754,6 +754,17 @@ hatched lines might contain:</p>
 </li>
 <li><p>Starting from version 5.4, the value can also be a decimal
 value (and not only integer).</p></li>
+<li><p>[<em>expression</em>] was introduced in version 8.2 to allow expressions
+to be used to calculate size values. Expressions must return a numeric value,
+and attributes can be used as part of the expression.</p>
+<div class="highlight-mapfile notranslate"><div class="highlight"><pre><span></span><span class="k">STYLE</span>
+  <span class="k">SYMBOL</span> <span class="s">&#39;circle&#39;</span>
+  <span class="k">COLOR</span> <span class="mi">255</span> <span class="mi">0</span> <span class="mi">0</span>
+  <span class="k">SIZE</span> <span class="p">([</span><span class="err">MYHEIGHT</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">END</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </dd>
 </dl>
@@ -884,9 +895,9 @@ value (and not only integer).</p></li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; <a href="../copyright.html">Copyright</a> 2023, Open Source Geospatial Foundation.
-      Last updated on 2023-12-22.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
+    &#169; <a href="../copyright.html">Copyright</a> 2024, Open Source Geospatial Foundation.
+      Last updated on 2024-02-08.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

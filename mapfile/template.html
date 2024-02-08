@@ -134,7 +134,7 @@
 <dd class="field-even"><p>jmckenna at gatewaygeomatics.com</p>
 </dd>
 <dt class="field-odd">Last Updated<span class="colon">:</span></dt>
-<dd class="field-odd"><p>2021-03-30</p>
+<dd class="field-odd"><p>2024-01-25</p>
 </dd>
 </dl>
 <nav class="contents" id="table-of-contents">
@@ -860,14 +860,14 @@ query results.</p>
 <p>Available attributes:</p>
 <ul class="simple">
 <li><dl class="simple">
-<dt>name =</dt><dd><p>The name of an attribute, case insenstive. (required)</p>
+<dt>name =</dt><dd><p>The name of an attribute, case insensitive. (required)</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>precision =</dt><dd><p>The number of decimal places to use for numeric data. Use
 of this will force display as a number and will lead to
-unpredicable results with non-numeric data.</p>
+unpredictable results with non-numeric data.</p>
 </dd>
 </dl>
 </li>
@@ -906,6 +906,15 @@ inclusion in a URL (=url), or not escape at all (=none).</p>
 token “$value” is used to place the value in a more
 complex presentation. Default is to output only the
 value.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>ignoremissing =</dt><dd><p>Set this attribute to “true” to ignore errors if the
+attribute set in name is missing for the feature. In this case
+the nullformat value will be used, or an empty
+string if not set. Useful for using the same template
+for multiple datasets with variations in attribute names.</p>
 </dd>
 </dl>
 </li>
@@ -1138,9 +1147,9 @@ application settings.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; <a href="../copyright.html">Copyright</a> 2023, Open Source Geospatial Foundation.
-      Last updated on 2023-12-22.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
+    &#169; <a href="../copyright.html">Copyright</a> 2024, Open Source Geospatial Foundation.
+      Last updated on 2024-02-08.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>
